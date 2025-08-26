@@ -1,28 +1,26 @@
 import pandas as pd
-import gradio as gr
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
-# Wczytaj dane
+# Wczytaj dane z Excela
 df = pd.read_excel("Categorization_tool_CAPL.xlsx", sheet_name="tool", engine="openpyxl")
 
-def znajdz_kategorie_pim(front_kategoria):
-    df2 = df[df['front_category_leaf_name'].str.lower() == front_kategoria.lower()]
-    if not df2.empty:
-        return df2[['pim_category_id', 'pim_category_full_path']].drop_duplicates().reset_index(drop=True)
-    else:
-        return pd.DataFrame({
-            "pim_category_id": ["Nie znaleziono"],
-            "pim_category_full_path": ["Brak danych"]
-        })
-
-with gr.Blocks() as demo:
-    gr.Markdown("## 🔍 Narzędzie do mapowania kategorii")
-    wej = gr.Textbox(label="Wprowadź kategorię")
-    btn = gr.Button("Szukaj")
-    out = gr.Dataframe(headers=["pim_category_id", "pim_category_full_path"])
-    btn.click(fn=znajdz_kategorie_pim, inputs=wej, outputs=out)
-    gr.Image(value="cat_app_file.jpg", label="Instrukcja")
-
-# ✅ FastAPI app z Gradio
 app = FastAPI()
-app = gr.mount_gradio_app(app, demo, path="/")
+templates = Jinja2Templates(directory="templates")
+
+# Strona główna z formularzem
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request, "results": None})
+
+# Obsługa wyszukiwania
+@app.post("/", response_class=HTMLResponse)
+async def search(request: Request, category: str = Form(...)):
+    wyniki = df[df['front_category_leaf_name'].str.lower() == category.lower()]
+    if wyniki.empty:
+        results = [{"pim_category_id": "Nie znaleziono", "pim_category_full_path": "Brak danych"}]
+    else:
+        results = wyniki[['pim_category_id', 'pim_category_full_path']].drop_duplicates().to_dict(orient="records")
+    
+    return templates.TemplateResponse("index.html", {"request": request, "results": results, "category": category})
