@@ -1,6 +1,6 @@
-pandas
-openpyxl
-gradio
 fastapi
 uvicorn
-gunicorn
+pandas
+openpyxl
+jinja2
+
