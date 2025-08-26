@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CAPL Categorization Tool</title>
+</head>
+<body>
+    <h2>🔍 Narzędzie do mapowania kategorii</h2>
+    <form method="post">
+        <label>Wprowadź kategorię front:</label>
+        <input type="text" name="category" required>
+        <button type="submit">Szukaj</button>
+    </form>
+
+    {% if results %}
+        <h3>Wyniki dla: "{{ category }}"</h3>
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>pim_category_id</th>
+                <th>pim_category_full_path</th>
+            </tr>
+            {% for row in results %}
+            <tr>
+                <td>{{ row.pim_category_id }}</td>
+                <td>{{ row.pim_category_full_path }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
