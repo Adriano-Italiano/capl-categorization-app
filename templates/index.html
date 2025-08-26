@@ -35,6 +35,31 @@
             </tbody>
         </table>
     {% endif %}
+    {% if results %}
+    <h4 class="mb-3">Wyniki dla: <span class="text-muted">"{{ category }}"</span></h4>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>pim_category_id</th>
+                <th>pim_category_full_path</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in results %}
+            <tr>
+                <td>{{ row["pim_category_id"] }}</td>
+                <td>{{ row["pim_category_full_path"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- NOWE: instrukcja obrazkowa -->
+    <div class="text-center mt-4">
+        <h5>Instrukcja:</h5>
+        <img src="/static/cat_app_file.jpg" alt="Instrukcja" class="img-fluid rounded shadow">
+    </div>
+{% endif %}
 
 </body>
 </html>
