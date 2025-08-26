@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
@@ -7,7 +8,10 @@ from fastapi.templating import Jinja2Templates
 df = pd.read_excel("Categorization_tool_CAPL.xlsx", sheet_name="tool", engine="openpyxl")
 
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+
 
 # Strona główna z formularzem
 @app.get("/", response_class=HTMLResponse)
