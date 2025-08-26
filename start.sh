@@ -1,2 +1,3 @@
 #!/bin/bash
-exec gunicorn app:app --workers 1 --threads 2 --timeout 600 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:$PORT
+exec uvicorn app:app --host 0.0.0.0 --port $PORT
+
