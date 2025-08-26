@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <title>CAPL Categorization Tool</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body>
-    <h2>🔍 Narzędzie do mapowania kategorii</h2>
-    <form method="post">
-        <label>Wprowadź kategorię front:</label>
-        <input type="text" name="category" required>
-        <button type="submit">Szukaj</button>
+<body class="container mt-5">
+
+    <h2 class="mb-4">🔍 Narzędzie do mapowania kategorii</h2>
+
+    <form method="post" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="category" class="form-control" placeholder="Wprowadź kategorię front" required>
+            <button type="submit" class="btn btn-primary">Szukaj</button>
+        </div>
     </form>
 
     {% if results %}
-        <h3>Wyniki dla: "{{ category }}"</h3>
-        <table border="1" cellpadding="5">
-            <tr>
-                <th>pim_category_id</th>
-                <th>pim_category_full_path</th>
-            </tr>
-            {% for row in results %}
-            <tr>
-                <td>{{ row.pim_category_id }}</td>
-                <td>{{ row.pim_category_full_path }}</td>
-            </tr>
-            {% endfor %}
+        <h4 class="mb-3">Wyniki dla: <span class="text-muted">"{{ category }}"</span></h4>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>pim_category_id</th>
+                    <th>pim_category_full_path</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results %}
+                <tr>
+                    <td>{{ row["pim_category_id"] }}</td>
+                    <td>{{ row["pim_category_full_path"] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
     {% endif %}
+
 </body>
 </html>
