@@ -1,65 +1,65 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>CAPL Categorization Tool</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <meta charset="UTF-8" />
+  <title>CAPL Categorization Tool</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
 </head>
-<body class="container mt-5">
+<body class="container py-5">
 
-    <h2 class="mb-4">🔍 Narzędzie do mapowania kategorii</h2>
+  <h2 class="mb-4">🔍 Narzędzie do mapowania kategorii</h2>
 
-    <form method="post" class="mb-4">
-        <div class="input-group">
-            <input type="text" name="category" class="form-control" placeholder="Wprowadź kategorię front" required>
-            <button type="submit" class="btn btn-primary">Szukaj</button>
-        </div>
-    </form>
+  <form method="post" class="mb-4">
+    <div class="input-group">
+      <input
+        type="text"
+        name="category"
+        class="form-control"
+        placeholder="Wprowadź nazwę kategorii front"
+        required
+      />
+      <button type="submit" class="btn btn-primary">Szukaj</button>
+    </div>
+  </form>
 
-    {% if results %}
-        <h4 class="mb-3">Wyniki dla: <span class="text-muted">"{{ category }}"</span></h4>
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th>pim_category_id</th>
-                    <th>pim_category_full_path</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in results %}
-                <tr>
-                    <td>{{ row["pim_category_id"] }}</td>
-                    <td>{{ row["pim_category_full_path"] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
-    {% if results %}
+  {% if results %}
     <h4 class="mb-3">Wyniki dla: <span class="text-muted">"{{ category }}"</span></h4>
-    <table class="table table-bordered table-striped">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle">
         <thead class="table-dark">
-            <tr>
-                <th>pim_category_id</th>
-                <th>pim_category_full_path</th>
-            </tr>
+          <tr>
+            <th>pim_category_id</th>
+            <th>pim_category_full_path</th>
+          </tr>
         </thead>
         <tbody>
-            {% for row in results %}
-            <tr>
-                <td>{{ row["pim_category_id"] }}</td>
-                <td>{{ row["pim_category_full_path"] }}</td>
-            </tr>
-            {% endfor %}
+          {% for row in results %}
+          <tr>
+            <td>{{ row["pim_category_id"] }}</td>
+            <td>{{ row["pim_category_full_path"] }}</td>
+          </tr>
+          {% endfor %}
         </tbody>
-    </table>
-
-    <!-- NOWE: instrukcja obrazkowa -->
-    <div class="text-center mt-4">
-        <h5>Instrukcja:</h5>
-        <img src="/templates/cat_app_file.jpg" alt="Instrukcja" class="img-fluid rounded shadow">
+      </table>
     </div>
-{% endif %}
+  {% endif %}
+
+  <hr class="my-4" />
+
+  <!-- Instrukcja zawsze na dole strony -->
+  <div class="text-center">
+    <h5 class="mb-3">Instrukcja</h5>
+    <img
+      src="cat_app_file.jpg"
+      alt="Instrukcja użytkowania"
+      class="img-fluid rounded shadow"
+      style="max-height: 75vh;"
+    />
+  </div>
 
 </body>
 </html>
